@@ -10,12 +10,12 @@ public class Quiz {
     private String date;
     private double result;
     private int numAnswered;
-    private Question q1;
-    private Question q2;
-    private Question q3;
-    private Question q4;
-    private Question q5;
-    private Question q6;
+    private String q1;
+    private String q2;
+    private String q3;
+    private String q4;
+    private String q5;
+    private String q6;
 
     public Quiz() {
         this.id = -1;
@@ -30,6 +30,19 @@ public class Quiz {
         this.q6 = null;
     }
 
+    public Quiz(String date, double result, int numAnswered, String q1, String q2,
+                 String q3, String q4, String q5, String q6) {
+        this.id = -1;
+        this.result = result;
+        this.numAnswered = numAnswered;
+        this.q1 = q1;
+        this.q2 = q2;
+        this.q3 = q3;
+        this.q4 = q4;
+        this.q5 = q5;
+        this.q6 = q6;
+    }
+
     public long getId() {return id;}
     public void setId(long id) {this.id = id;}
 
@@ -42,23 +55,23 @@ public class Quiz {
     public int getNumAnswered() {return numAnswered;}
     public void setNumAnswered(int inNum) {this.numAnswered = inNum;}
 
-    public Question getQ1() {return this.q1;}
-    public void setQ1(Question q) {this.q1 = q;}
+    public String getQ1() {return this.q1;}
+    public void setQ1(String q) {this.q1 = q;}
 
-    public Question getQ2() {return this.q2;}
-    public void setQ2(Question q) {this.q2 = q;}
+    public String getQ2() {return this.q2;}
+    public void setQ2(String q) {this.q2 = q;}
 
-    public Question getQ3() {return this.q3;}
-    public void setQ3(Question q) {this.q3 = q;}
+    public String getQ3() {return this.q3;}
+    public void setQ3(String q) {this.q3 = q;}
 
-    public Question getQ4() {return this.q4;}
-    public void setQ4(Question q) {this.q4 = q;}
+    public String getQ4() {return this.q4;}
+    public void setQ4(String q) {this.q4 = q;}
 
-    public Question getQ5() {return this.q5;}
-    public void setQ5(Question q) {this.q5 = q;}
+    public String getQ5() {return this.q5;}
+    public void setQ5(String q) {this.q5 = q;}
 
-    public Question getQ6() {return this.q6;}
-    public void setQ6(Question q) {this.q6 = q;}
+    public String getQ6() {return this.q6;}
+    public void setQ6(String q) {this.q6 = q;}
 
 
 } // Quiz

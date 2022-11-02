@@ -35,6 +35,9 @@ public class Question {
     public String getAdditional2(){return additional2;}
     public void setAdditional2(String inAdd) {this.additional2 = inAdd;}
 
+    public String toString() {
+        return id + ": " + name + " " + capital + " " + additional1 +  " " + additional2;
+    }
 
 
 } // Question
