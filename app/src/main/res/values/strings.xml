@@ -6,12 +6,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="help_fragment_text">
         <![CDATA[
-            <h3>Capital Quiz</h3> <p>This app can be used to manage your potential job leads.
-            Each job lead includes the <i>company name</i>, <i>telephone number</i>, its <i>website URL</i>, and your brief <i>comments</i> about the company.
-            Open the nav drawer to view the navigation menu.  You will be able to invoke the app\'s functions.
+            <h3>Capital Quiz</h3> <p>This app can be used to test your knowledge of capital cities.
+             Open the nav drawer to view the navigation menu.  You will be able to invoke the app\'s functions.
             You will be able to access the following screens:<br/><br/>
              <b>Start Quiz</b><br/>
-             Here, you will be able to begin a new quiz! Each quiz consists of 6 questions, and each question ahs 3 possible answers. Your job is to match the country to its capital.<br/><br/>
+             Here, you will be able to begin a new quiz! Each quiz consists of 6 questions, and each question has 3 possible answers. Your job is to match the country to its capital.<br/><br/>
              <b>Quiz History</b><br/>
              Here, you will be able to review all of your past quizzes. They are sorted from newest to oldest. <br/><br/>
              <b>Close app</b><br/>
