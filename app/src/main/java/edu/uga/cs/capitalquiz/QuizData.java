@@ -7,11 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class facilitates the storing and restoring of Quizzes
+ * Along with the reading of questions from a CSV file
  */
 public class QuizData {
 
@@ -136,6 +140,52 @@ public class QuizData {
         return quiz;
 
     } // storeQuiz
+
+
+    /**
+     * A method to store questions from the CSV file into our SQLite database
+     */
+    public void storeQuestions() {
+
+        try {
+            FileReader file = new FileReader("state_capitals.csv");
+            BufferedReader buffer = new BufferedReader(file);
+
+            String tableName = "TABLE_QUESTIONS";
+            String line = "";
+            String[] columns = {
+                    QuizDBHelper.QUESTIONS_COLUMN_ID + ", ",
+                    QuizDBHelper.QUESTIONS_STATE_NAME + ", ",
+                    QuizDBHelper.QUESTIONS_STATE_CAPITAL + ", ",
+                    QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1 + ", ",
+                    QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2 + ", "
+            };
+
+            String insert_str = "INSERT INTO " + tableName + " (" + columns
+                    + ") values(";
+            String end_str = ");";
+
+            db.beginTransaction();
+            while ((line = buffer.readLine()) != null) {
+                StringBuilder sb = new StringBuilder(insert_str);
+                String[] str = line.split(",");
+                sb.append("'" + str[0] + "',");
+                sb.append(str[1] + "',");
+                sb.append(str[2] + "',");
+                sb.append(str[3] + "'");
+                sb.append(end_str);
+                db.execSQL(sb.toString());
+            } // end while
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+
+        } catch (Exception e) {
+            Log.d(DEBUG_TAG, "Error storing questions csv file");
+        } // try catch
+
+
+    } // storeQuestions
 
 
 

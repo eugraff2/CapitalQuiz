@@ -73,5 +73,19 @@ public class Quiz {
     public String getQ6() {return this.q6;}
     public void setQ6(String q) {this.q6 = q;}
 
+    /**
+     * This method will be used when displaying past quizzes in ReviewQuizFragment
+     */
+    public String toString() {
+        return  "Date: " + this.getDate() + "\n" +
+                "Questions Answered: " + this.getNumAnswered() + "\n" +
+                "Result: " + this.getResult() + "\n" +
+                "Question 1: " + this.getQ1() + "Question 2: " + this.getQ2() + "\n" +
+                "Question 3: " + this.getQ3() + "\n" +
+                "Question 4: " + this.getQ4() + "\n" +
+                "Question 5: " + this.getQ5() + "\n" +
+                "Question 6: " + this.getQ6() + "\n";
+    } // toString
+
 
 } // Quiz
