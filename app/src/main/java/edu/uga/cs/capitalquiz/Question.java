@@ -35,6 +35,9 @@ public class Question {
     public String getAdditional2(){return additional2;}
     public void setAdditional2(String inAdd) {this.additional2 = inAdd;}
 
+    /**
+     * This method will be used when storing questions into a quiz using setQ#(...)
+     */
     public String toString() {
         return id + ": " + name + " " + capital + " " + additional1 +  " " + additional2;
     }
