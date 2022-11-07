@@ -10,12 +10,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 public class QuizPagerAdapter extends FragmentStateAdapter {
     private final Fragment[] myFragments = new Fragment[] {//Initialize fragments views
 //Fragment views are initialized like any other fragment (Extending Fragment)
-            new NewQuizFragment(),
-            new NewQuizFragment(),
-            new NewQuizFragment(),
-            new NewQuizFragment(),
-            new NewQuizFragment(),
-            new NewQuizFragment(),
+            NewQuizFragment.newInstance(0),
+            NewQuizFragment.newInstance(1),
+            NewQuizFragment.newInstance(2),
+            NewQuizFragment.newInstance(3),
+            NewQuizFragment.newInstance(4),
+            NewQuizFragment.newInstance(5),
+            FinishQuizFragment.newInstance(6),
     };
 
     public final String[] mFragmentNames = new String[] {//Tabs names array
@@ -24,7 +25,8 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
             "3",
             "4",
             "5",
-            "6"
+            "6",
+            " "
     };
 
 

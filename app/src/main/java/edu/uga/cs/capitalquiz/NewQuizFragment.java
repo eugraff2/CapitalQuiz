@@ -65,6 +65,15 @@ public class NewQuizFragment extends Fragment {
 
 
     @Override
+    public void onCreate( Bundle savedInstanceState ) {
+        super.onCreate( savedInstanceState );
+        if( getArguments() != null ) {
+            questNum = getArguments().getInt( "questionNum" );
+            Log.d( TAG, "Quest Num equals2: " + questNum );
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState ) {
         // Inflate the layout for this fragment
@@ -82,8 +91,10 @@ public class NewQuizFragment extends Fragment {
         answer2View = getView().findViewById(R.id.answer2);
         answer3View = getView().findViewById(R.id.answer3);
 
+        Log.d( TAG, "Quest Num equals: " + questNum );
         questionTitle.setText(questionTitles[questNum]);
 
+        /*
         quizData = new QuizData(getActivity());
         quizData.open();
         List<Question> questList = quizData.generateQuestions();
@@ -121,6 +132,8 @@ public class NewQuizFragment extends Fragment {
         answer3View.setText(answers.get(2));
 
         quizData.storeQuiz(newQuiz);
+        */
+
     }
 
 
