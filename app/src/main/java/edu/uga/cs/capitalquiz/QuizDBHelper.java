@@ -70,8 +70,9 @@ public class QuizDBHelper extends SQLiteOpenHelper {
 
     // access method to the single instance of the class
     public static synchronized QuizDBHelper getInstance(Context context) {
-        if (helperInstance == null)
+        if (helperInstance == null) {
             helperInstance = new QuizDBHelper(context.getApplicationContext());
+        }
         return helperInstance;
     } // getInstance
 

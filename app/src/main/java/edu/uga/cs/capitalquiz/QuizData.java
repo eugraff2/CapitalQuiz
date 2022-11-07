@@ -28,7 +28,7 @@ public class QuizData {
 
     private SQLiteDatabase db;
     private SQLiteOpenHelper quizDBHelper;
-    private final String[] allColumns = {
+    private static final String[] quizColumns = {
             QuizDBHelper.QUIZZES_COLUMN_ID,
             QuizDBHelper.QUIZZES_DATE,
             QuizDBHelper.QUIZZES_QUESTION_1,
@@ -40,6 +40,15 @@ public class QuizData {
             QuizDBHelper.QUIZZES_RESULT,
             QuizDBHelper.QUIZZES_ANSWERED
     };
+
+    private static final String[] questionColumns =  {
+            QuizDBHelper.QUESTIONS_STATE_NAME,
+            QuizDBHelper.QUESTIONS_STATE_CAPITAL,
+            QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1,
+            QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2
+    };
+
+
 
     public QuizData(Context context) {
         this.quizDBHelper = QuizDBHelper.getInstance(context);
@@ -66,7 +75,7 @@ public class QuizData {
 
         // Execute the select query and get the Cursor to iterate over the retrieved rows
         try {
-            cursor = db.query(QuizDBHelper.TABLE_QUIZZES, allColumns,
+            cursor = db.query(QuizDBHelper.TABLE_QUIZZES, quizColumns,
                     null, null, null, null, null);
 
             if (cursor != null && cursor.getCount() > 0) {
@@ -115,8 +124,9 @@ public class QuizData {
             Log.d(DEBUG_TAG, "Exception caught: " + e);
         } // try catch
         finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return quizzes;
     } // retrieve quizzes
@@ -147,6 +157,7 @@ public class QuizData {
     } // storeQuiz
 
     public Question storeQuestion (Question question) {
+
         ContentValues values = new ContentValues();
         values.put(QuizDBHelper.QUESTIONS_STATE_NAME, question.getName());
         values.put(QuizDBHelper.QUESTIONS_STATE_CAPITAL, question.getCapital());
@@ -158,6 +169,7 @@ public class QuizData {
         question.setId(id);
 
         return question;
+
     } // storeQuestion
 
     public List<Question> generateQuestions() {
@@ -167,14 +179,16 @@ public class QuizData {
 
         // Execute the select query and get the Cursor to iterate over the retrieved rows
         try {
-            cursor = db.query(QuizDBHelper.TABLE_QUESTIONS, allColumns,
+            cursor = db.query(QuizDBHelper.TABLE_QUESTIONS, questionColumns,
                     null, null, null, null, null);
 
-            if (cursor != null && cursor.getCount() < 0) {
+            if (cursor != null && cursor.getCount() > 0) {
 
-                while (cursor.moveToNext() && cursor.getCount() < 6) { // getCount < 6 condition to only generate 6 questions
+                while (cursor.moveToNext()) { // getCount < 6 condition to only generate 6 questions
 
                     if (cursor.getColumnCount() >= 5) {
+
+
                         // get all attributes for question
                         columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_COLUMN_ID);
                         long id = cursor.getLong(columnIndex);
@@ -207,6 +221,7 @@ public class QuizData {
             if (cursor != null)
                 cursor.close();
         }
+
         return questions;
 
     } // generateQuestions

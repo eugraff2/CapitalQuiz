@@ -22,7 +22,7 @@ public class ReviewQuizFragment extends Fragment {
     private static final String TAG = "ReviewQuizFragment";
 
     private QuizData quizData = null;
-    private List<Quiz> quizList;
+    private List<Quiz> quizzesList;
 
     private RecyclerView recyclerView;
     private QuizRecyclerAdapter recyclerAdapter;
@@ -65,7 +65,7 @@ public class ReviewQuizFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( getActivity() );
         recyclerView.setLayoutManager( layoutManager );
 
-        quizList = new ArrayList<Quiz>();
+        quizzesList = new ArrayList<Quiz>();
 
         // Create a QuizData instance, since we will need to save a new Quiz to the dn.
         // Note that even though more activities may create their own instances of the QuizData
@@ -106,9 +106,9 @@ public class ReviewQuizFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Quiz> quizList) {
             Log.d(TAG, "QuizDBReader: quizList.size(): " + quizList.size());
-            quizList.addAll(quizList);
+            quizzesList.addAll(quizList);
 
-            recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizList);
+            recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizzesList);
             recyclerView.setAdapter(recyclerAdapter);
 
         }
@@ -135,16 +135,16 @@ public class ReviewQuizFragment extends Fragment {
         @Override
         protected void onPostExecute( Quiz quiz ) {
             // Update the recycler view to include the new job lead
-            quizList.add(quiz);
+            quizzesList.add(quiz);
 
             // Sync the originalValues list in the recyler adapter to the new updated list (quizList)
             recyclerAdapter.sync();
 
             // Notify the adapter that an item has been inserted
-            recyclerAdapter.notifyItemInserted(quizList.size() - 1 );
+            recyclerAdapter.notifyItemInserted(quizzesList.size() - 1 );
 
             // Reposition the view to show to newly added item by smoothly scrolling to it
-            recyclerView.smoothScrollToPosition( quizList.size() - 1 );
+            recyclerView.smoothScrollToPosition( quizzesList.size() - 1 );
 
             Log.d( TAG, "Quiz saved: " + quiz );
         }
@@ -164,7 +164,7 @@ public class ReviewQuizFragment extends Fragment {
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                recyclerView.smoothScrollToPosition(quizList.size()-1);
+                recyclerView.smoothScrollToPosition(quizzesList.size()-1);
             }
         });
 

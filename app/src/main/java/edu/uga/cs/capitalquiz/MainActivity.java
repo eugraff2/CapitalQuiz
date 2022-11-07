@@ -26,7 +26,6 @@ import com.opencsv.CSVReader;
 import java.io.InputStreamReader;
 
 
-
 /**
  * The main activity class.  It just sets listeners for the two buttons.
  */
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
     private QuizData quizData = null;
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
