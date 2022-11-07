@@ -2,13 +2,18 @@ package edu.uga.cs.capitalquiz;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.renderscript.ScriptGroup;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -142,7 +147,6 @@ public class QuizData {
     } // storeQuiz
 
     public List<Question> generateQuestions() {
-        Random rand = new Random();
         ArrayList<Question> questions = new ArrayList<>();
         Cursor cursor = null;
         int columnIndex;
@@ -168,11 +172,14 @@ public class QuizData {
                         String additional1 = cursor.getString(columnIndex);
                         columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2);
                         String additional2 = cursor.getString(columnIndex);
-                        int answered = cursor.getInt(columnIndex);
                         // creation of new Question object
+
                         Question question = new Question(name, capital, additional1, additional2);
                         question.setId(id);
+
                         questions.add(question);
+                        Log.d(DEBUG_TAG, "question added: " + question);
+
                     } // if cursor count >= 5
 
                 } // while loop
@@ -189,52 +196,6 @@ public class QuizData {
         return questions;
 
     } // generateQuestions
-
-
-    /**
-     * A method to store questions from the CSV file into our SQLite database
-     */
-    public void storeQuestions() {
-
-        try {
-            FileReader file = new FileReader("state_capitals.csv");
-            BufferedReader buffer = new BufferedReader(file);
-
-            String tableName = "TABLE_QUESTIONS";
-            String line = "";
-            String[] columns = {
-                    QuizDBHelper.QUESTIONS_COLUMN_ID + ", ",
-                    QuizDBHelper.QUESTIONS_STATE_NAME + ", ",
-                    QuizDBHelper.QUESTIONS_STATE_CAPITAL + ", ",
-                    QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1 + ", ",
-                    QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2 + ", "
-            };
-
-            String insert_str = "INSERT INTO " + tableName + " (" + columns
-                    + ") values(";
-            String end_str = ");";
-
-            db.beginTransaction();
-            while ((line = buffer.readLine()) != null) {
-                StringBuilder sb = new StringBuilder(insert_str);
-                String[] str = line.split(",");
-                sb.append("'" + str[0] + "',");
-                sb.append(str[1] + "',");
-                sb.append(str[2] + "',");
-                sb.append(str[3] + "'");
-                sb.append(end_str);
-                db.execSQL(sb.toString());
-            } // end while
-
-            db.setTransactionSuccessful();
-            db.endTransaction();
-
-        } catch (Exception e) {
-            Log.d(DEBUG_TAG, "Error storing questions csv file");
-        } // try catch
-
-    } // storeQuestions
-
 
 
 

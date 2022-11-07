@@ -78,7 +78,7 @@ public class ReviewQuizFragment extends Fragment {
         // was not called yet!
         quizData.open();
 
-        // Execute the retrieval of the job leads in an asynchronous way,
+        // Execute the retrieval of the quizzes in an asynchronous way,
         // without blocking the main UI thread.
         new QuizDBReader().execute();
 
@@ -105,7 +105,7 @@ public class ReviewQuizFragment extends Fragment {
         // onPostExecute is like the notify method in an asynchronous method call discussed in class.
         @Override
         protected void onPostExecute(List<Quiz> quizList) {
-            Log.d(TAG, "QuizDBReader: jobList.size(): " + quizList.size());
+            Log.d(TAG, "QuizDBReader: quizList.size(): " + quizList.size());
             quizList.addAll(quizList);
 
             recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizList);

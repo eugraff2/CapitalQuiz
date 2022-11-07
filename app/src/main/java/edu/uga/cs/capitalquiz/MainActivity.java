@@ -8,11 +8,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ContentValues;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStream;
+import com.opencsv.CSVReader;
+
+import java.io.InputStreamReader;
+
+
 
 /**
  * The main activity class.  It just sets listeners for the two buttons.
@@ -25,10 +38,41 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
-
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
+
+        try {
+            InputStream is = getAssets().open("state_capitals.csv");
+            CSVReader reader = new CSVReader(new InputStreamReader(is));
+            String[] nextRow;
+
+            db.beginTransaction();
+            while ( (nextRow = reader.readNext() ) != null) {
+
+                // nextRow[] is an array of values from the line
+                for (int i = 0; i < nextRow.length; i++) {
+
+                    String[] data = nextRow[i].split(",");
+                    // data should be an array of the separated values from the individual csv lines
+
+                    ContentValues values = new ContentValues();
+                    values.put(QuizDBHelper.QUESTIONS_STATE_NAME, data[0]);
+                    values.put(QuizDBHelper.QUESTIONS_STATE_CAPITAL, data[1]);
+                    values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1, data[2]);
+                    values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2, data[3]);
+
+                    db.insert(QuizDBHelper.TABLE_QUESTIONS, null, values);
+
+                } // for i
+
+            } // end while
+
+        } catch (Exception e) {
+            Log.d(TAG, "Error storing data from CSV file");
+        } // try catch
+
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
