@@ -43,11 +43,8 @@ public class NewQuizSwipeFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, mViewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        tab.setText(((QuizPagerAdapter)(mViewPager.getAdapter())).mFragmentNames[position]);//Sets tabs names as mentioned in ViewPagerAdapter fragmentNames array, this can be implemented in many different ways.
-                    }
+                (tab, position) -> {
+                    tab.setText(((QuizPagerAdapter)(mViewPager.getAdapter())).mFragmentNames[position]);//Sets tabs names as mentioned in ViewPagerAdapter fragmentNames array, this can be implemented in many different ways.
                 }
         ).attach();
 

@@ -27,6 +27,7 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
             "6"
     };
 
+
     public QuizPagerAdapter(FragmentActivity fa){//Pager constructor receives Activity instance
         super(fa);
     }
