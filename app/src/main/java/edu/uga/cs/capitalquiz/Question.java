@@ -33,7 +33,7 @@ public class Question {
     public String getName() {return name;}
     public void setName(String inName) {this.name = inName;}
 
-    public String capital() {return capital;}
+    public String getCapital() {return capital;}
     public void setCapital(String inCapital) {this.capital = inCapital;}
 
     public String getAdditional1(){return additional1;}

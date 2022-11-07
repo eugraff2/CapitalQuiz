@@ -38,39 +38,34 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
-    private SQLiteDatabase db;
+    private QuizData quizData = null;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
+
+        quizData = new QuizData(getApplicationContext());
+        quizData.open();
 
         try {
             InputStream is = getAssets().open("state_capitals.csv");
             CSVReader reader = new CSVReader(new InputStreamReader(is));
             String[] nextRow;
 
-            db.beginTransaction();
             while ( (nextRow = reader.readNext() ) != null) {
-
                 // nextRow[] is an array of values from the line
-                for (int i = 0; i < nextRow.length; i++) {
 
-                    String[] data = nextRow[i].split(",");
-                    // data should be an array of the separated values from the individual csv lines
+                String name = nextRow[0];
+                String capital = nextRow[1];
+                String add1 = nextRow[2];
+                String add2 = nextRow[3];
 
-                    ContentValues values = new ContentValues();
-                    values.put(QuizDBHelper.QUESTIONS_STATE_NAME, data[0]);
-                    values.put(QuizDBHelper.QUESTIONS_STATE_CAPITAL, data[1]);
-                    values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1, data[2]);
-                    values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2, data[3]);
-
-                    db.insert(QuizDBHelper.TABLE_QUESTIONS, null, values);
-
-                } // for i
+                Question q = new Question(name, capital, add1, add2);
+                quizData.storeQuestion(q);
 
             } // end while
 
         } catch (Exception e) {
-            Log.d(TAG, "Error storing data from CSV file");
+            Log.d(TAG, "Error storing data from CSV file" + e);
         } // try catch
 
         super.onCreate( savedInstanceState );

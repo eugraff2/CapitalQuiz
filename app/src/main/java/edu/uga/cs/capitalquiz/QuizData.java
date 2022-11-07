@@ -146,6 +146,20 @@ public class QuizData {
 
     } // storeQuiz
 
+    public Question storeQuestion (Question question) {
+        ContentValues values = new ContentValues();
+        values.put(QuizDBHelper.QUESTIONS_STATE_NAME, question.getName());
+        values.put(QuizDBHelper.QUESTIONS_STATE_CAPITAL, question.getCapital());
+        values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1, question.getAdditional1());
+        values.put(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2, question.getAdditional2());
+
+
+        long id = db.insert(QuizDBHelper.TABLE_QUESTIONS, null, values);
+        question.setId(id);
+
+        return question;
+    } // storeQuestion
+
     public List<Question> generateQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         Cursor cursor = null;
@@ -196,6 +210,8 @@ public class QuizData {
         return questions;
 
     } // generateQuestions
+
+
 
 
 
