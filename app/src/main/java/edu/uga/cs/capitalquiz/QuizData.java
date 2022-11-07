@@ -68,7 +68,7 @@ public class QuizData {
 
                 while (cursor.moveToNext() ) {
 
-                    if (cursor.getColumnCount() >= 5) {
+                    if (cursor.getColumnCount() >= 10) {
                         // get all attributes for quiz
                         columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_COLUMN_ID);
                         long id = cursor.getLong(columnIndex);
@@ -141,6 +141,55 @@ public class QuizData {
 
     } // storeQuiz
 
+    public List<Question> generateQuestions() {
+        Random rand = new Random();
+        ArrayList<Question> questions = new ArrayList<>();
+        Cursor cursor = null;
+        int columnIndex;
+
+        // Execute the select query and get the Cursor to iterate over the retrieved rows
+        try {
+            cursor = db.query(QuizDBHelper.TABLE_QUESTIONS, allColumns,
+                    null, null, null, null, null);
+
+            if (cursor != null && cursor.getCount() < 0) {
+
+                while (cursor.moveToNext() && cursor.getCount() < 6) { // getCount < 6 condition to only generate 6 questions
+
+                    if (cursor.getColumnCount() >= 5) {
+                        // get all attributes for question
+                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_COLUMN_ID);
+                        long id = cursor.getLong(columnIndex);
+                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_NAME);
+                        String name = cursor.getString(columnIndex);
+                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_CAPITAL);
+                        String capital = cursor.getString(columnIndex);
+                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1);
+                        String additional1 = cursor.getString(columnIndex);
+                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2);
+                        String additional2 = cursor.getString(columnIndex);
+                        int answered = cursor.getInt(columnIndex);
+                        // creation of new Question object
+                        Question question = new Question(name, capital, additional1, additional2);
+                        question.setId(id);
+                        questions.add(question);
+                    } // if cursor count >= 5
+
+                } // while loop
+
+            } // if cursor not null
+
+        } catch (Exception e) {
+            Log.d(DEBUG_TAG, "Exception caught: " + e);
+        } // try catch
+        finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return questions;
+
+    } // generateQuestions
+
 
     /**
      * A method to store questions from the CSV file into our SQLite database
@@ -184,8 +233,8 @@ public class QuizData {
             Log.d(DEBUG_TAG, "Error storing questions csv file");
         } // try catch
 
-
     } // storeQuestions
+
 
 
 

@@ -26,12 +26,12 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     public static final String QUESTIONS_ADDITIONAL_CITY_2 = "additional2";
 
     private static final String CREATE_QUESTIONS =
-            "create table " + TABLE_QUESTIONS + "("
-            + QUESTIONS_COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + QUESTIONS_STATE_NAME + "TEXT, "
-            + QUESTIONS_STATE_CAPITAL + "TEXT, "
-            + QUESTIONS_ADDITIONAL_CITY_1 + "TEXT, "
-            + QUESTIONS_ADDITIONAL_CITY_2 + "TEXT"
+            "create table " + TABLE_QUESTIONS + " ("
+            + QUESTIONS_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + QUESTIONS_STATE_NAME + " TEXT, "
+            + QUESTIONS_STATE_CAPITAL + " TEXT, "
+            + QUESTIONS_ADDITIONAL_CITY_1 + " TEXT, "
+            + QUESTIONS_ADDITIONAL_CITY_2 + " TEXT"
             + ")";
 
 
@@ -51,17 +51,17 @@ public class QuizDBHelper extends SQLiteOpenHelper {
     public static final String QUIZZES_ANSWERED = "answered";
 
     private static final String CREATE_QUIZZES =
-            "create table " + TABLE_QUIZZES + "("
-            + QUIZZES_COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "create table " + TABLE_QUIZZES + " ("
+            + QUIZZES_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + QUIZZES_DATE + "TEXT, "
-            + QUIZZES_QUESTION_1 + "TEXT, "
-            + QUIZZES_QUESTION_2 + "TEXT, "
-            + QUIZZES_QUESTION_3 + "TEXT, "
-            + QUIZZES_QUESTION_4 + "TEXT, "
-            + QUIZZES_QUESTION_5 + "TEXT, "
-            + QUIZZES_QUESTION_6 + "TEXT, "
-            + QUIZZES_RESULT + "TEXT, "
-            + QUIZZES_ANSWERED + "TEXT"
+            + QUIZZES_QUESTION_1 + " TEXT, "
+            + QUIZZES_QUESTION_2 + " TEXT, "
+            + QUIZZES_QUESTION_3 + " TEXT, "
+            + QUIZZES_QUESTION_4 + " TEXT, "
+            + QUIZZES_QUESTION_5 + " TEXT, "
+            + QUIZZES_QUESTION_6 + " TEXT, "
+            + QUIZZES_RESULT + " TEXT, "
+            + QUIZZES_ANSWERED + " TEXT"
             + ")";
 
 

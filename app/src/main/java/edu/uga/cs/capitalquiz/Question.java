@@ -20,6 +20,13 @@ public class Question {
         this.additional2 = null;
     }
 
+    public Question(String name, String capital, String additional1, String additional2) {
+        this.name = name;
+        this.capital = capital;
+        this.additional1 = additional1;
+        this.additional2 = additional2;
+    }
+
     public long getId() {return id;}
     public void setId(long id) {this.id = id;}
 

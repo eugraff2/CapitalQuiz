@@ -33,6 +33,7 @@ public class Quiz {
     public Quiz(String date, double result, int numAnswered, String q1, String q2,
                  String q3, String q4, String q5, String q6) {
         this.id = -1;
+        this.date = date;
         this.result = result;
         this.numAnswered = numAnswered;
         this.q1 = q1;
