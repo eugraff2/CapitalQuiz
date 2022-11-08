@@ -1,10 +1,12 @@
 package edu.uga.cs.capitalquiz;
 
+import java.io.Serializable;
+
 /**
  * POJO to represent a state capital quiz
  */
 
-public class Quiz {
+public class Quiz implements Serializable {
 
     private long id;
     private String date;

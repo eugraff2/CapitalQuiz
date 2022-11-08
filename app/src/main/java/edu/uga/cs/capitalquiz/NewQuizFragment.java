@@ -1,5 +1,6 @@
 package edu.uga.cs.capitalquiz;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +33,24 @@ public class NewQuizFragment extends Fragment {
     private RadioButton answer2View;
     private RadioButton answer3View;
 
+    private RadioGroup radioGroup;
+    private RadioButton selectedAnswer;
+
+    private String correctAnswer;
+    private int addScore = 0;
+    private boolean answered= false;
 
     private QuizData quizData;
-    private List<Quiz> collectionQuiz;
     private String a1;
     private String a2;
     private String a3;
+    private int answeredQuestions;
+    private Question q1;
+    private Question q2;
+    private Question q3;
+    private Question q4;
+    private Question q5;
+    private Question q6;
 
     // which question to display in the fragment
     private int questNum;
@@ -48,6 +62,15 @@ public class NewQuizFragment extends Fragment {
             "Question 4",
             "Question 5",
             "Question 6"
+    };
+
+    public final Integer[] questNumbers = new Integer[] {//Tabs names array
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
     };
 
 
@@ -92,15 +115,15 @@ public class NewQuizFragment extends Fragment {
 
         questionTitle.setText(questionTitles[questNum]);
 
-
         quizData = new QuizData(getActivity());
         quizData.open();
         List<Question> questList = quizData.generateQuestions();
         Collections.shuffle(questList);
         Log.d( TAG, "How long is list: " + questList.size() );
 
-
         // get questions from generated list
+
+
         Question q1 = questList.get(0);
         Question q2 = questList.get(1);
         Question q3 = questList.get(2);
@@ -117,10 +140,11 @@ public class NewQuizFragment extends Fragment {
         newQuiz.setQ6(q6.toString());
 
         // set question TextView variable to appropriate question
-        questionView.setText(questList.get(questNum).toString());
+        questionView.setText("What is the capital of " + questList.get(questNum).getName() + "?");
 
         // create ArrayList of answers, shuffle, then set to UI radioButtons
         ArrayList<String> answers = new ArrayList<>();
+        correctAnswer = questList.get(questNum).getCapital();
         answers.add(questList.get(questNum).getCapital());
         answers.add(questList.get(questNum).getAdditional1());
         answers.add(questList.get(questNum).getAdditional2());
@@ -130,74 +154,26 @@ public class NewQuizFragment extends Fragment {
         answer2View.setText(answers.get(1));
         answer3View.setText(answers.get(2));
 
-        quizData.storeQuiz(newQuiz);
-
-        new QuizDBReader().execute();
 
     }
 
-
-
-    // This is an AsyncTask class (it extends AsyncTask) to perform DB reading of quizzes, asynchronously.
-    private class QuizDBReader extends AsyncTask<Void, List<Quiz>> {
-        // This method will run as a background process to read from db.
-        // It returns a list of retrieved Quiz objects.
-        // It will be automatically invoked by Android, when we call the execute method
-        // in the onCreate callback (the job leads review activity is started).
-        @Override
-        protected List<Quiz> doInBackground( Void... params ) {
-            List<Quiz> collectionQuiz = quizData.retrieveAllQuizzes();
-
-            Log.d( TAG, "QuizDBReader: Quizzes retrieved: " + collectionQuiz.size() );
-
-            return collectionQuiz;
-        }
-
-        // This method will be automatically called by Android once the db reading
-        // background process is finished.
-        // onPostExecute is like the notify method in an asynchronous method call discussed in class.
-        @Override
-        protected void onPostExecute( List<Quiz> quizList ) {
-            Log.d( TAG, "QuizDBReader: quizList.size(): " + quizList.size() );
-          //  collectionQuiz.addAll(quizList);
-
-        }
-    }
-
-
-
-    // This is an AsyncTask class (it extends AsyncTask) to perform DB writing of a quiz, asynchronously.
-    public class QuizDBWriter extends AsyncTask<Quiz, Quiz> {
-
-        // This method will run as a background process to write into db.
-        // It will be automatically invoked by Android, when we call the execute method
-        // in the onClick listener of the Save button.
-        @Override
-        protected Quiz doInBackground( Quiz... myQuiz ) {
-            quizData.storeQuiz( myQuiz[0] );
-            return myQuiz[0];
-        }
-
-        // This method will be automatically called by Android once the writing to the database
-        // in a background process has finished.  Note that doInBackground returns a JobLead object.
-        // That object will be passed as argument to onPostExecute.
-        // onPostExecute is like the notify method in an asynchronous method call discussed in class.
-        @Override
-        protected void onPostExecute( Quiz myQuiz ) {
-            // Show a quick confirmation message
-            Toast.makeText( getActivity(), "Quiz created on " + myQuiz.getDate(),
-                    Toast.LENGTH_SHORT).show();
-
-
-            Log.d( TAG, "Quiz saved: " + myQuiz );
-        }
-
-
-    }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        radioGroup = getView().findViewById(R.id.radioGroup);
+        // get selected radio button from radioGroup
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        // find the radiobutton by returned id
+        selectedAnswer = getView().findViewById(selectedId);
+
+
+        answer1View = getView().findViewById(R.id.answer1);
+        answer2View = getView().findViewById(R.id.answer2);
+        answer3View = getView().findViewById(R.id.answer3);
+
+
         // open the database in onResume
         if( quizData != null )
             quizData.open();
@@ -209,6 +185,43 @@ public class NewQuizFragment extends Fragment {
     public void onPause() {
         Log.d( TAG, "NewQuizFragment.onPause()" );
         super.onPause();
+
+        Quiz thisQuiz = new Quiz();
+        thisQuiz.setNumAnswered(questNumbers[questNum]);
+        Log.d( TAG, "Number answered: " + questNumbers[questNum] );
+
+        //if radioButton selected, save answer, record points *****
+        radioGroup = getView().findViewById(R.id.radioGroup);
+        answer1View = getView().findViewById(R.id.answer1);
+        answer2View = getView().findViewById(R.id.answer2);
+        answer3View = getView().findViewById(R.id.answer3);
+
+        try {
+            // get selected radio button from radioGroup
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            // find the radiobutton by returned id
+            selectedAnswer = getView().findViewById(selectedId);
+            Log.d( TAG, "Answer selected " + selectedAnswer.getText().toString() );
+
+            if(correctAnswer.equals(selectedAnswer.getText().toString())){
+                Log.d( TAG, "CORRECT ");
+                addScore += 1;
+                thisQuiz.setResult(addScore);
+                Toast.makeText( getActivity(), "CORRECT ", Toast.LENGTH_SHORT).show();
+
+            } else {
+                Toast.makeText( getActivity(), "INCORRECT \r\nCorrect Answer: " + correctAnswer, Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText( getActivity(), "You skipped this question! ", Toast.LENGTH_SHORT).show();
+            Log.d( TAG, "No answer selected ");
+        }
+
+
+
+
         // close the database in onPause
         if( quizData != null )
             quizData.close();

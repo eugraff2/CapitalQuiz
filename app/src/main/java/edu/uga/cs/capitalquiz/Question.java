@@ -1,10 +1,12 @@
 package edu.uga.cs.capitalquiz;
 
+import java.io.Serializable;
+
 /**
  * POJO to represent a quiz question
  */
 
-public class Question {
+public class Question implements Serializable {
 
     private long id;
     private String name;

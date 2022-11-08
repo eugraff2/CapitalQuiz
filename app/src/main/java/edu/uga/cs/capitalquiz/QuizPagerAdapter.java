@@ -16,7 +16,7 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
             NewQuizFragment.newInstance(3),
             NewQuizFragment.newInstance(4),
             NewQuizFragment.newInstance(5),
-            FinishQuizFragment.newInstance(6),
+            FinishQuizFragment.newInstance(),
     };
 
     public final String[] mFragmentNames = new String[] {//Tabs names array
@@ -49,6 +49,7 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         return myFragments[position];
     }
+
 
 
 }

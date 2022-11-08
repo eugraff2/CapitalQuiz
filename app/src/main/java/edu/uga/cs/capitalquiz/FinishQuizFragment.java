@@ -11,22 +11,26 @@ import androidx.annotation.NonNull;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class FinishQuizFragment extends Fragment {
 
     private static final String TAG = "HelpFragment";
 
     private Button finishButton;
+    private TextView dateText;
+    private TextView scoreText;
+
 
     public FinishQuizFragment() {
         // Required empty public constructor
     }
 
-    public static FinishQuizFragment newInstance(int questNum) {
+    public static FinishQuizFragment newInstance() {
         FinishQuizFragment fragment = new FinishQuizFragment();
-        Bundle args = new Bundle();
-        args.putInt( "questionNum", questNum );
-        fragment.setArguments( args );
         return fragment;
     }
 
@@ -61,6 +65,12 @@ public class FinishQuizFragment extends Fragment {
     public void onViewCreated( @NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated(view,savedInstanceState);
         finishButton = getView().findViewById(R.id.submitButton);
+        dateText = getView().findViewById(R.id.dateTime);
+        scoreText = getView().findViewById(R.id.finalScore);
+        DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
+        String dateFormat = date.format(Calendar.getInstance().getTime());
+        dateText.setText(dateFormat);
+
 
         finishButton.setOnClickListener( new SaveButtonClickListener()) ;
 
