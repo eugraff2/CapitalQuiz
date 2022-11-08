@@ -46,12 +46,6 @@ public class FinishQuizFragment extends Fragment {
         public void onClick( View v ) {
 
             getActivity().onBackPressed();
-
-            quizData = new QuizData(getActivity());
-            quizData.open();
-
-
-
         }
     }
 

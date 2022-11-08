@@ -39,9 +39,8 @@ public class NewQuizSwipeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NewQuizSwipeFragment newInstance(Quiz currentQuiz) {
+    public static NewQuizSwipeFragment newInstance() {
         NewQuizSwipeFragment fragment = new NewQuizSwipeFragment();
-        myQuiz = currentQuiz;
         return fragment;
     }
 
@@ -56,6 +55,7 @@ public class NewQuizSwipeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated( view, savedInstanceState );
+        myQuiz = new Quiz();
         quizData = new QuizData(getActivity());
         quizData.open();
 

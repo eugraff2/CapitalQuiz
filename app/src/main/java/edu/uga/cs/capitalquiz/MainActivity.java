@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         switch( menuItem.getItemId() ) {
             case R.id.menu_add:
                 Quiz newQuiz = new Quiz();
-                fragment = NewQuizSwipeFragment.newInstance(newQuiz);
+                fragment = NewQuizSwipeFragment.newInstance();
                 break;
             case R.id.menu_review:
                 fragment =  ReviewQuizFragment.newInstance();
