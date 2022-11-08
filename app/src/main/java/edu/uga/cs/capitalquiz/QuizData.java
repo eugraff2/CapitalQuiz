@@ -107,7 +107,7 @@ public class QuizData {
                     Quiz quiz = new Quiz(date, result, answered, q1, q2, q3, q4, q5, q6);
                     quiz.setId(id);
                     quizzes.add(quiz);
-                    Log.d(DEBUG_TAG, "quiz added: " + quiz);
+                    Log.d(DEBUG_TAG, "quiz added: " + quiz.getDate());
 
                 } // while loop
 
@@ -175,6 +175,7 @@ public class QuizData {
         ArrayList<Question> questions = new ArrayList<>();
         Cursor cursor = null;
         int columnIndex;
+        int count = 0;
 
         // Execute the select query and get the Cursor to iterate over the retrieved rows
         try {
@@ -183,7 +184,7 @@ public class QuizData {
 
             if (cursor != null && cursor.getCount() > 0) {
 
-                while (cursor.moveToNext()) { // getCount < 6 condition to only generate 6 questions
+                while (cursor.moveToNext() && count < 6 ) { // getCount < 6 condition to only generate 6 questions?
 
                     // get all attributes for question
                     columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_COLUMN_ID);
@@ -202,7 +203,8 @@ public class QuizData {
                     question.setId(id);
 
                     questions.add(question);
-                    Log.d(DEBUG_TAG, "question added: " + question);
+                    count++;
+                    Log.d(DEBUG_TAG, "question added: " + question.getName());
 
 
                 } // while loop

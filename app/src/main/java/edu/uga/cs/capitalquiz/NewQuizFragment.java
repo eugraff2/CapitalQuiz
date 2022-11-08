@@ -41,6 +41,8 @@ public class NewQuizFragment extends Fragment {
     private boolean answered= false;
 
     private QuizData quizData;
+    private Quiz newQuiz;
+
     private String a1;
     private String a2;
     private String a3;
@@ -122,8 +124,6 @@ public class NewQuizFragment extends Fragment {
         Log.d( TAG, "How long is list: " + questList.size() );
 
         // get questions from generated list
-
-
         Question q1 = questList.get(0);
         Question q2 = questList.get(1);
         Question q3 = questList.get(2);
@@ -131,7 +131,7 @@ public class NewQuizFragment extends Fragment {
         Question q5 = questList.get(4);
         Question q6 = questList.get(5);
 
-        Quiz newQuiz = new Quiz();
+        newQuiz = new Quiz();
         newQuiz.setQ1(q1.toString());
         newQuiz.setQ2(q2.toString());
         newQuiz.setQ3(q3.toString());
@@ -141,6 +141,7 @@ public class NewQuizFragment extends Fragment {
 
         // set question TextView variable to appropriate question
         questionView.setText("What is the capital of " + questList.get(questNum).getName() + "?");
+
 
         // create ArrayList of answers, shuffle, then set to UI radioButtons
         ArrayList<String> answers = new ArrayList<>();
@@ -153,7 +154,6 @@ public class NewQuizFragment extends Fragment {
         answer1View.setText(answers.get(0));
         answer2View.setText(answers.get(1));
         answer3View.setText(answers.get(2));
-
 
     }
 
@@ -180,7 +180,7 @@ public class NewQuizFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( getResources().getString( R.string.app_name ) );
     }
 
-    // We need to save job leads into a file as the activity stops being a foreground activity
+    // We need to save quizzes into a file as the activity stops being a foreground activity
     @Override
     public void onPause() {
         Log.d( TAG, "NewQuizFragment.onPause()" );
@@ -220,18 +220,10 @@ public class NewQuizFragment extends Fragment {
         }
 
 
-
-
         // close the database in onPause
         if( quizData != null )
             quizData.close();
     }
-
-
-
-
-
-
 
 
 
