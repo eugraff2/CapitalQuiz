@@ -18,6 +18,9 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,8 +39,9 @@ public class NewQuizSwipeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NewQuizSwipeFragment newInstance() {
+    public static NewQuizSwipeFragment newInstance(Quiz currentQuiz) {
         NewQuizSwipeFragment fragment = new NewQuizSwipeFragment();
+        myQuiz = currentQuiz;
         return fragment;
     }
 
@@ -52,7 +56,6 @@ public class NewQuizSwipeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated( view, savedInstanceState );
-
         quizData = new QuizData(getActivity());
         quizData.open();
 
@@ -69,18 +72,22 @@ public class NewQuizSwipeFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 if(tab.getText().equals(" ")){
                     quizData.open();
-
+                    DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
+                    String dateFormat = date.format(Calendar.getInstance().getTime());
+                    myQuiz.setDate(dateFormat);
                     // throwing Null Object Reference error when FinishQuizFragment is added
                     quizData.storeQuiz(myQuiz);
-
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 tab.setTabLabelVisibility(TabLayout.TAB_LABEL_VISIBILITY_UNLABELED);
+                myQuiz.setNumAnswered(Integer.parseInt(tab.getText().toString()));
+                Log.d( TAG, "NewQuizSwipeFragment NumAnswered: " +  Integer.parseInt(tab.getText().toString()));
             }
 
 

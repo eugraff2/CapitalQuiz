@@ -50,14 +50,7 @@ public class FinishQuizFragment extends Fragment {
             quizData = new QuizData(getActivity());
             quizData.open();
 
-            myQuiz = new Quiz();
 
-            DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
-            String dateFormat = date.format(Calendar.getInstance().getTime());
-            myQuiz.setDate(dateFormat);
-
-            // Store this new quiz in the database asynchronously without blocking the UI thread.
-            reviewFragment.saveNewQuiz(myQuiz);
 
         }
     }
