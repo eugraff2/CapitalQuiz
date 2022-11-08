@@ -92,7 +92,7 @@ public class NewQuizFragment extends Fragment {
 
         questionTitle.setText(questionTitles[questNum]);
 
-        /*
+
         quizData = new QuizData(getActivity());
         quizData.open();
         List<Question> questList = quizData.generateQuestions();
@@ -108,6 +108,7 @@ public class NewQuizFragment extends Fragment {
         Question q5 = questList.get(4);
         Question q6 = questList.get(5);
 
+        Quiz newQuiz = new Quiz();
         newQuiz.setQ1(q1.toString());
         newQuiz.setQ2(q2.toString());
         newQuiz.setQ3(q3.toString());
@@ -130,21 +131,17 @@ public class NewQuizFragment extends Fragment {
         answer3View.setText(answers.get(2));
 
         quizData.storeQuiz(newQuiz);
-        */
 
-        quizData = new QuizData(getActivity());
-        quizData.open();
         new QuizDBReader().execute();
 
     }
 
 
 
-
     // This is an AsyncTask class (it extends AsyncTask) to perform DB reading of quizzes, asynchronously.
     private class QuizDBReader extends AsyncTask<Void, List<Quiz>> {
         // This method will run as a background process to read from db.
-        // It returns a list of retrieved JobLead objects.
+        // It returns a list of retrieved Quiz objects.
         // It will be automatically invoked by Android, when we call the execute method
         // in the onCreate callback (the job leads review activity is started).
         @Override

@@ -75,41 +75,39 @@ public class QuizData {
 
         // Execute the select query and get the Cursor to iterate over the retrieved rows
         try {
-            cursor = db.query(QuizDBHelper.TABLE_QUIZZES, quizColumns,
+            cursor = db.query(QuizDBHelper.TABLE_QUIZZES, null,
                     null, null, null, null, null);
 
             if (cursor != null && cursor.getCount() > 0) {
 
                 while (cursor.moveToNext() ) {
 
-                    if (cursor.getColumnCount() >= 10) {
-                        // get all attributes for quiz
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_COLUMN_ID);
-                        long id = cursor.getLong(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_DATE);
-                        String date = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_1);
-                        String q1 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_2);
-                        String q2 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_3);
-                        String q3 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_4);
-                        String q4 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_5);
-                        String q5 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_6);
-                        String q6 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_RESULT);
-                        Double result = cursor.getDouble(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_ANSWERED);
-                        int answered = cursor.getInt(columnIndex);
-                        // creation of new Quiz object
-                        Quiz quiz = new Quiz(date, result, answered, q1, q2, q3, q4, q5, q6);
-                        quiz.setId(id);
-                        quizzes.add(quiz);
-                        Log.d(DEBUG_TAG, "quiz added: " + quiz);
-                    } // if cursor count >= 5
+                    // get all attributes for quiz
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_COLUMN_ID);
+                    long id = cursor.getLong(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_DATE);
+                    String date = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_1);
+                    String q1 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_2);
+                    String q2 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_3);
+                    String q3 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_4);
+                    String q4 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_5);
+                    String q5 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_QUESTION_6);
+                    String q6 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_RESULT);
+                    Double result = cursor.getDouble(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUIZZES_ANSWERED);
+                    int answered = cursor.getInt(columnIndex);
+                    // creation of new Quiz object
+                    Quiz quiz = new Quiz(date, result, answered, q1, q2, q3, q4, q5, q6);
+                    quiz.setId(id);
+                    quizzes.add(quiz);
+                    Log.d(DEBUG_TAG, "quiz added: " + quiz);
 
                 } // while loop
 
@@ -173,42 +171,39 @@ public class QuizData {
     } // storeQuestion
 
     public List<Question> generateQuestions() {
+
         ArrayList<Question> questions = new ArrayList<>();
         Cursor cursor = null;
         int columnIndex;
 
         // Execute the select query and get the Cursor to iterate over the retrieved rows
         try {
-            cursor = db.query(QuizDBHelper.TABLE_QUESTIONS, questionColumns,
+            cursor = db.query(QuizDBHelper.TABLE_QUESTIONS, null,
                     null, null, null, null, null);
 
             if (cursor != null && cursor.getCount() > 0) {
 
                 while (cursor.moveToNext()) { // getCount < 6 condition to only generate 6 questions
 
-                    if (cursor.getColumnCount() >= 5) {
+                    // get all attributes for question
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_COLUMN_ID);
+                    long id = cursor.getLong(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_NAME);
+                    String name = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_CAPITAL);
+                    String capital = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1);
+                    String additional1 = cursor.getString(columnIndex);
+                    columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2);
+                    String additional2 = cursor.getString(columnIndex);
+                    // creation of new Question object
 
+                    Question question = new Question(name, capital, additional1, additional2);
+                    question.setId(id);
 
-                        // get all attributes for question
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_COLUMN_ID);
-                        long id = cursor.getLong(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_NAME);
-                        String name = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_STATE_CAPITAL);
-                        String capital = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_1);
-                        String additional1 = cursor.getString(columnIndex);
-                        columnIndex = cursor.getColumnIndex(QuizDBHelper.QUESTIONS_ADDITIONAL_CITY_2);
-                        String additional2 = cursor.getString(columnIndex);
-                        // creation of new Question object
+                    questions.add(question);
+                    Log.d(DEBUG_TAG, "question added: " + question);
 
-                        Question question = new Question(name, capital, additional1, additional2);
-                        question.setId(id);
-
-                        questions.add(question);
-                        Log.d(DEBUG_TAG, "question added: " + question);
-
-                    } // if cursor count >= 5
 
                 } // while loop
 

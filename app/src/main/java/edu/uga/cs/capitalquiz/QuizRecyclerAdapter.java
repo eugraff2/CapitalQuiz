@@ -82,13 +82,14 @@ public class QuizRecyclerAdapter
     // The position parameter indicates the position on the list of jobs list.
     @Override
     public void onBindViewHolder(QuizHolder holder, int position) {
+
         Quiz quiz = values.get(position);
 
         Log.d(DEBUG_TAG, "onBindViewHolder: " + quiz);
 
         holder.date.setText(quiz.getDate());
         holder.result.setText(String.valueOf(quiz.getResult()));
-        holder.answered.setText(quiz.getNumAnswered());
+        holder.answered.setText(String.valueOf(quiz.getNumAnswered()));
         holder.q1.setText(quiz.getQ1());
         holder.q2.setText(quiz.getQ2());
         holder.q3.setText(quiz.getQ3());
