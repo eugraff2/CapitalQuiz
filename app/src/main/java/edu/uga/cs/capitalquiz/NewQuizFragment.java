@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +31,9 @@ public class NewQuizFragment extends Fragment {
     private RadioButton answer2View;
     private RadioButton answer3View;
 
-    private Quiz newQuiz = new Quiz();
-    // populate Quiz with questions using QuizDBHelper
 
     private QuizData quizData;
+    private List<Quiz> collectionQuiz;
     private String a1;
     private String a2;
     private String a3;
@@ -69,7 +69,6 @@ public class NewQuizFragment extends Fragment {
         super.onCreate( savedInstanceState );
         if( getArguments() != null ) {
             questNum = getArguments().getInt( "questionNum" );
-            Log.d( TAG, "Quest Num equals2: " + questNum );
         }
     }
 
@@ -91,7 +90,6 @@ public class NewQuizFragment extends Fragment {
         answer2View = getView().findViewById(R.id.answer2);
         answer3View = getView().findViewById(R.id.answer3);
 
-        Log.d( TAG, "Quest Num equals: " + questNum );
         questionTitle.setText(questionTitles[questNum]);
 
         /*
@@ -134,11 +132,45 @@ public class NewQuizFragment extends Fragment {
         quizData.storeQuiz(newQuiz);
         */
 
+        quizData = new QuizData(getActivity());
+        quizData.open();
+        new QuizDBReader().execute();
+
     }
 
 
-    // This is an AsyncTask class (it extends AsyncTask) to perform DB writing of a job lead, asynchronously.
-    public class QuizDataDBWriter extends AsyncTask<Quiz, Quiz> {
+
+
+    // This is an AsyncTask class (it extends AsyncTask) to perform DB reading of quizzes, asynchronously.
+    private class QuizDBReader extends AsyncTask<Void, List<Quiz>> {
+        // This method will run as a background process to read from db.
+        // It returns a list of retrieved JobLead objects.
+        // It will be automatically invoked by Android, when we call the execute method
+        // in the onCreate callback (the job leads review activity is started).
+        @Override
+        protected List<Quiz> doInBackground( Void... params ) {
+            List<Quiz> collectionQuiz = quizData.retrieveAllQuizzes();
+
+            Log.d( TAG, "QuizDBReader: Quizzes retrieved: " + collectionQuiz.size() );
+
+            return collectionQuiz;
+        }
+
+        // This method will be automatically called by Android once the db reading
+        // background process is finished.
+        // onPostExecute is like the notify method in an asynchronous method call discussed in class.
+        @Override
+        protected void onPostExecute( List<Quiz> quizList ) {
+            Log.d( TAG, "QuizDBReader: quizList.size(): " + quizList.size() );
+          //  collectionQuiz.addAll(quizList);
+
+        }
+    }
+
+
+
+    // This is an AsyncTask class (it extends AsyncTask) to perform DB writing of a quiz, asynchronously.
+    public class QuizDBWriter extends AsyncTask<Quiz, Quiz> {
 
         // This method will run as a background process to write into db.
         // It will be automatically invoked by Android, when we call the execute method
@@ -160,8 +192,29 @@ public class NewQuizFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
 
 
-            Log.d( TAG, "Job lead saved: " + myQuiz );
+            Log.d( TAG, "Quiz saved: " + myQuiz );
         }
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // open the database in onResume
+        if( quizData != null )
+            quizData.open();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( getResources().getString( R.string.app_name ) );
+    }
+
+    // We need to save job leads into a file as the activity stops being a foreground activity
+    @Override
+    public void onPause() {
+        Log.d( TAG, "NewQuizFragment.onPause()" );
+        super.onPause();
+        // close the database in onPause
+        if( quizData != null )
+            quizData.close();
     }
 
 

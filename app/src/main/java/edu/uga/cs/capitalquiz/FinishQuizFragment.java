@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ public class FinishQuizFragment extends Fragment {
 
     private static final String TAG = "HelpFragment";
 
+    private Button finishButton;
+
     public FinishQuizFragment() {
         // Required empty public constructor
     }
@@ -25,6 +28,21 @@ public class FinishQuizFragment extends Fragment {
         args.putInt( "questionNum", questNum );
         fragment.setArguments( args );
         return fragment;
+    }
+
+
+    private class SaveButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick( View v ) {
+
+            getActivity().onBackPressed();
+
+            //    Quiz myquiz = new Quiz();
+
+            // Store this new quiz in the database asynchronously,
+            // without blocking the UI thread.
+            //  new QuizDBWriter().execute( myquiz );
+        }
     }
 
     @Override
@@ -42,6 +60,9 @@ public class FinishQuizFragment extends Fragment {
     @Override
     public void onViewCreated( @NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated(view,savedInstanceState);
+        finishButton = getView().findViewById(R.id.submitButton);
+
+        finishButton.setOnClickListener( new SaveButtonClickListener()) ;
 
     }
 
