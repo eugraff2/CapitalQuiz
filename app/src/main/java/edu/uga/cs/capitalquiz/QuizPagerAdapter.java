@@ -1,5 +1,7 @@
 package edu.uga.cs.capitalquiz;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -28,7 +30,7 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     };
 
 
-    public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn, ArrayList<Integer> fragmentScores){//Pager constructor receives Activity instance
+    public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn, ArrayList<Integer> fragmentScores, Quiz quiz){//Pager constructor receives Activity instance
         super(fa);
         this.questList = questListIn;
         for (int i = 0; i < 6; i++) {
@@ -36,6 +38,9 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
             myFragments[i] = newFrag;
         } // for i
         myFragments[6] = FinishQuizFragment.newInstance(fragmentScores);
+        Bundle args = new Bundle();
+        args.putSerializable("quiz", quiz);
+        myFragments[6].setArguments(args);
     }
 
     @Override

@@ -151,26 +151,6 @@ public class ReviewQuizFragment extends Fragment {
     } // QuizDBWriter
 
 
-    public void saveNewQuiz(Quiz quiz) {
-
-        new QuizDBWriter().execute(quiz);
-
-        // Reposition the RecyclerView to show the JobLead most recently added (as the last item on the list).
-        // Use of the post method is needed to wait until the RecyclerView is rendered, and only then
-        // reposition the item into view (show the last item on the list).
-        // the post method adds the argument (Runnable) to the message queue to be executed
-        // by Android on the main UI thread.  It will be done *after* the setAdapter call
-        // updates the list items, so the repositioning to the last item will take place
-        // on the complete list of items.
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.smoothScrollToPosition(quizzesList.size()-1);
-            }
-        });
-
-    } // saveNewQuiz
-
     @Override
     public void onResume() {
         super.onResume();

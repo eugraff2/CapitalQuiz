@@ -67,7 +67,7 @@ public class FinishQuizFragment extends Fragment {
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-
+        finishQuiz = (Quiz) getArguments().getSerializable("quiz");
     }
 
 

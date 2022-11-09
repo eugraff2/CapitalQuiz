@@ -90,7 +90,7 @@ public class NewQuizSwipeFragment extends Fragment {
         myQuiz.setQ6(q6.toString());
 
         mViewPager = view.findViewById(R.id.viewer);//Get ViewPager2 view
-        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), questions, fragmentScores));//Attach the adapter with our ViewPagerAdapter passing the host activity
+        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), questions, fragmentScores, myQuiz));//Attach the adapter with our ViewPagerAdapter passing the host activity
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, mViewPager,
