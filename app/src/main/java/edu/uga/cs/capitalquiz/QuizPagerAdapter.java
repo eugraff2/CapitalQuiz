@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
@@ -13,16 +14,8 @@ import java.util.ArrayList;
 public class QuizPagerAdapter extends FragmentStateAdapter {
 
     private ArrayList<String> questList;
-    private final Fragment[] myFragments = new Fragment[] { //Initialize fragments views
-//Fragment views are initialized like any other fragment (Extending Fragment)
-            NewQuizFragment.newInstance(0, questList),
-            NewQuizFragment.newInstance(1, questList),
-            NewQuizFragment.newInstance(2, questList),
-            NewQuizFragment.newInstance(3, questList),
-            NewQuizFragment.newInstance(4, questList),
-            NewQuizFragment.newInstance(5, questList),
-            FinishQuizFragment.newInstance(),
-    };
+
+    private final Fragment[] myFragments = new Fragment[7];
 
     public final String[] mFragmentNames = new String[] {//Tabs names array
             "1",
@@ -37,7 +30,12 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
 
     public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn){//Pager constructor receives Activity instance
         super(fa);
-        questList = questListIn;
+        this.questList = questListIn;
+        for (int i = 0; i < 6; i++) {
+            NewQuizFragment newFrag = NewQuizFragment.newInstance(i, questListIn);
+            myFragments[i] = newFrag;
+        } // for i
+        myFragments[6] = FinishQuizFragment.newInstance();
     }
 
     @Override
@@ -49,6 +47,8 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public long getItemId(int position) {
         return super.getItemId(position);
     }
+
+
 
     @NonNull
     @Override

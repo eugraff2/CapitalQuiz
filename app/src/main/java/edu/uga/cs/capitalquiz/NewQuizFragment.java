@@ -73,6 +73,10 @@ public class NewQuizFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void setQuestList(ArrayList<String> qList) {
+        this.questList = qList;
+    }
+
     public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList) {
         NewQuizFragment fragment = new NewQuizFragment();
         Bundle args = new Bundle();
@@ -88,6 +92,7 @@ public class NewQuizFragment extends Fragment {
         super.onCreate( savedInstanceState );
         if( getArguments() != null ) {
             questNum = getArguments().getInt( "questionNum" );
+            questList = getArguments().getStringArrayList("questList");
         }
     }
 

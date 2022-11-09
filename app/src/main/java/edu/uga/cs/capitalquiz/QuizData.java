@@ -255,7 +255,6 @@ public class QuizData {
                     for (int i = 0; i < names.size(); i++) {
                         if (name.equals(names.get(i))) {
                             questions.add(question);
-                            System.out.println("Q added");
                         }
                     }
 
