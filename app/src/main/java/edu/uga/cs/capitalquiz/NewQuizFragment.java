@@ -41,6 +41,7 @@ public class NewQuizFragment extends Fragment {
 
     private int finalScore = 0;
 
+    private static Quiz finishQuiz;
     private QuizData quizData;
     // list of question names to be passed in
     private ArrayList<String> questList;
@@ -95,6 +96,8 @@ public class NewQuizFragment extends Fragment {
             questNum = getArguments().getInt( "questionNum" );
             questList = getArguments().getStringArrayList("questList");
             fragmentScores = getArguments().getIntegerArrayList("scoreList");
+            finishQuiz = (Quiz) getArguments().getSerializable("quiz");
+            //Log.d(TAG, "Quiz Fragment Q1: " +  finishQuiz.toString());
         }
     }
 
@@ -171,7 +174,6 @@ public class NewQuizFragment extends Fragment {
         Log.d( TAG, "NewQuizFragment.onPause()" );
         super.onPause();
 
-        Quiz thisQuiz = new Quiz();
     //    thisQuiz.setNumAnswered(questNumbers[questNum]);
       //  Log.d( TAG, "Number answered: " + questNumbers[questNum] );
 
@@ -229,7 +231,8 @@ public class NewQuizFragment extends Fragment {
             finalScore += fragmentScores.get(i);
         }
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
-       // myQuiz.setResult(finalScore);
+        //finishQuiz.setResult(finalScore);
+
 
     }
 

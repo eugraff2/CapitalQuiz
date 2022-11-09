@@ -68,6 +68,7 @@ public class FinishQuizFragment extends Fragment {
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
         finishQuiz = (Quiz) getArguments().getSerializable("quiz");
+        Log.d(TAG, "FINISH Quiz Fragment Q1: " +  finishQuiz.toString());
     }
 
 
