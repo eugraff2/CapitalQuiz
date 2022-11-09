@@ -103,34 +103,16 @@ public class NewQuizSwipeFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
-                if(tab.getText().equals(" ")){
-                    DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
-                    String dateFormat = date.format(Calendar.getInstance().getTime());
-                    myQuiz.setDate(dateFormat);
-                    Log.d( TAG, "Quiz date saved: " + myQuiz.getDate() );
-
-                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
-                if(tab.getText().equals("6")) {
-                    Log.d(TAG, "Unselected 6 " );
-                }
-                if(tab.getText().equals(" ")) {
-                    Log.d(TAG, "Unselected BLANK " );
-                }
-
                 tab.setTabLabelVisibility(TabLayout.TAB_LABEL_VISIBILITY_UNLABELED);
-
             }
 
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 

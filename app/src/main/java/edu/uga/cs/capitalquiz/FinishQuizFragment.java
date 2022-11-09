@@ -87,6 +87,8 @@ public class FinishQuizFragment extends Fragment {
 
         DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
         String dateFormat = date.format(Calendar.getInstance().getTime());
+        finishQuiz.setDate(dateFormat);
+        Log.d( TAG, "Quiz date saved: " + finishQuiz.getDate() );
         dateText.setText(dateFormat);
         double score = finishQuiz.getResult();
         scoreText.setText(String.valueOf(score));
