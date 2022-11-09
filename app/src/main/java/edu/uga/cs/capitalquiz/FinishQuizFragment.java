@@ -122,7 +122,6 @@ public class FinishQuizFragment extends Fragment {
             Log.d( TAG, "Quiz saved: " + myQuiz );
         }
 
-
     }
 
 }

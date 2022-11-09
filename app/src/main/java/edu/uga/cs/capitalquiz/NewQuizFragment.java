@@ -214,7 +214,6 @@ public class NewQuizFragment extends Fragment {
             if(correctAnswer.equals(selectedAnswer.getText().toString())){
                 Log.d( TAG, "CORRECT ");
                 scoreForFragment = 1;
-                // thisQuiz.setResult(thisQuiz.getResult() + addScore);
                 //  Log.d( TAG, "NewQuizFragment Result: " + thisQuiz.getResult() );
                 Toast.makeText( getActivity(), "CORRECT ", Toast.LENGTH_SHORT).show();
 
@@ -222,6 +221,8 @@ public class NewQuizFragment extends Fragment {
                 scoreForFragment = 0;
                 Toast.makeText( getActivity(), "INCORRECT \r\nCorrect Answer: " + correctAnswer, Toast.LENGTH_SHORT).show();
             }
+            finishQuiz.setResult(finishQuiz.getResult() + scoreForFragment);
+
 
         } catch (Exception e) {
             scoreForFragment = 0;
