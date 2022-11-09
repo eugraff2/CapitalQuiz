@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         quizData.open();
 
         try {
+            quizData.deleteAllQuestions();
             InputStream is = getAssets().open("state_capitals.csv");
             CSVReader reader = new CSVReader(new InputStreamReader(is));
             String[] nextRow;
@@ -61,7 +62,11 @@ public class MainActivity extends AppCompatActivity {
                 String add2 = nextRow[3];
 
                 Question q = new Question(name, capital, add1, add2);
-                quizData.storeQuestion(q);
+                if (q.getName().equals("State")) {
+
+                } else {
+                    quizData.storeQuestion(q);
+                }
 
             } // end while
 

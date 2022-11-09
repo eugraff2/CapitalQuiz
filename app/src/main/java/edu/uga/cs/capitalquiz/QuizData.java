@@ -276,6 +276,10 @@ public class QuizData {
     }
 
 
+    public void deleteAllQuestions() {
+        db.execSQL("delete from " + QuizDBHelper.TABLE_QUESTIONS);
+    }
+
 
 
 } // QuizData
