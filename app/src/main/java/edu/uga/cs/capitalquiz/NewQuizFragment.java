@@ -78,10 +78,13 @@ public class NewQuizFragment extends Fragment {
         this.questList = qList;
     }
 
-    public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList, ArrayList<Integer> fragmentScores) {
+    public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList, ArrayList<Integer> fragmentScores, Quiz finalQuiz) {
         NewQuizFragment fragment = new NewQuizFragment();
         Bundle args = new Bundle();
+        finishQuiz = finalQuiz;
+        Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
         args.putInt( "questionNum", questNum );
+        args.putSerializable("quiz", finishQuiz);
         args.putStringArrayList("questList", questList);
         args.putIntegerArrayList("scoreList", fragmentScores);
         fragment.setArguments( args );
@@ -237,8 +240,8 @@ public class NewQuizFragment extends Fragment {
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
 
         // TEST HERE
-        //finishQuiz.setResult(finalScore);
-       // Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
+       finishQuiz.setResult(finalScore);
+       //Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
 
 
     }
