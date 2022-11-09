@@ -48,7 +48,7 @@ public class Question implements Serializable {
      * This method will be used when storing questions into a quiz using setQ#(...)
      */
     public String toString() {
-        return id + ": " + name + " " + capital + " " + additional1 +  " " + additional2;
+        return name + ", " + "correct answer: " + capital;
     }
 
 
