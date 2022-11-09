@@ -222,8 +222,6 @@ public class NewQuizFragment extends Fragment {
             Toast.makeText( getActivity(), "You skipped this question! ", Toast.LENGTH_SHORT).show();
             Log.d( TAG, "No answer selected ");
         }
-
-        Log.d( TAG, "Score for this fragment: " + scoreForFragment);
     }
 
 
