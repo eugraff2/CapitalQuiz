@@ -96,7 +96,11 @@ public class NewQuizFragment extends Fragment {
             questNum = getArguments().getInt( "questionNum" );
             questList = getArguments().getStringArrayList("questList");
             fragmentScores = getArguments().getIntegerArrayList("scoreList");
+
+            // TEST HERE
             finishQuiz = (Quiz) getArguments().getSerializable("quiz");
+
+            // TEST HERE
             //Log.d(TAG, "Quiz Fragment Q1: " +  finishQuiz.toString());
         }
     }
@@ -231,6 +235,8 @@ public class NewQuizFragment extends Fragment {
             finalScore += fragmentScores.get(i);
         }
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
+
+        // TEST HERE
         //finishQuiz.setResult(finalScore);
 
 
