@@ -35,10 +35,12 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
         this.questList = questListIn;
         Bundle args = new Bundle();
         args.putSerializable("quiz", quiz);
+
         for (int i = 0; i < 6; i++) {
             NewQuizFragment newFrag = NewQuizFragment.newInstance(i, questListIn, fragmentScores, quiz);
             myFragments[i] = newFrag;
         } // for i
+
         myFragments[6] = FinishQuizFragment.newInstance(fragmentScores);
         myFragments[6].setArguments(args);
     }

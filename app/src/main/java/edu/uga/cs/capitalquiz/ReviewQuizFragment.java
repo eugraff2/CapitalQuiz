@@ -25,7 +25,7 @@ public class ReviewQuizFragment extends Fragment {
     private List<Quiz> quizzesList;
 
     private RecyclerView recyclerView;
-  //  private QuizRecyclerAdapter recyclerAdapter;
+    private QuizRecyclerAdapter recyclerAdapter;
 
     public ReviewQuizFragment() {
         // Required constructor
@@ -108,8 +108,8 @@ public class ReviewQuizFragment extends Fragment {
             Log.d(TAG, "QuizDBReader: quizList.size(): " + quizList.size());
             quizzesList.addAll(quizList);
 
-        //    recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizzesList);
-          //  recyclerView.setAdapter(recyclerAdapter);
+            recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizzesList);
+            recyclerView.setAdapter(recyclerAdapter);
 
         }
 
