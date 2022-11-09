@@ -38,6 +38,7 @@ public class NewQuizFragment extends Fragment {
 
     private String correctAnswer;
     private int scoreForFragment = -1;
+    private int questionsAnswered = 0;
 
     private int finalScore = 0;
 
@@ -206,6 +207,7 @@ public class NewQuizFragment extends Fragment {
             // find the radiobutton by returned id
             selectedAnswer = getView().findViewById(selectedId);
             Log.d( TAG, "Answer selected " + selectedAnswer.getText().toString() );
+            questionsAnswered = 1;
             // freeze the buttons after question is answered
             answer1View.setClickable(false);
             answer2View.setClickable(false);
@@ -221,7 +223,10 @@ public class NewQuizFragment extends Fragment {
                 scoreForFragment = 0;
                 Toast.makeText( getActivity(), "INCORRECT \r\nCorrect Answer: " + correctAnswer, Toast.LENGTH_SHORT).show();
             }
+            finishQuiz.setNumAnswered(finishQuiz.getNumAnswered() + questionsAnswered);
+            Log.d( TAG, "Question Answered: " + questionsAnswered + " getNumAnswered: " + finishQuiz.getNumAnswered());
             finishQuiz.setResult(finishQuiz.getResult() + scoreForFragment);
+
 
 
         } catch (Exception e) {
@@ -233,7 +238,6 @@ public class NewQuizFragment extends Fragment {
 
 
         fragmentScores.add(scoreForFragment);
-
         for (int i = 0; i < fragmentScores.size(); i++) {
             Log.d(TAG, " Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
             finalScore += fragmentScores.get(i);
@@ -241,7 +245,8 @@ public class NewQuizFragment extends Fragment {
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
 
         // TEST HERE
-       finishQuiz.setResult(finalScore);
+       finishQuiz.setResult(finalScore + 1);
+       //finishQuiz.setResult(finalScore + 1);
        //Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
 
 

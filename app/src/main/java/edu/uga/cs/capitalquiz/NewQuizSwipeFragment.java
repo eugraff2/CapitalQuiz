@@ -33,7 +33,6 @@ public class NewQuizSwipeFragment extends Fragment {
     private ViewPager2 mViewPager;
 
     private static Quiz myQuiz;
-    private List<Quiz> collectionQuiz;
 
     private QuizData quizData;
 
