@@ -238,6 +238,7 @@ public class NewQuizFragment extends Fragment {
 
         // TEST HERE
         //finishQuiz.setResult(finalScore);
+        //Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
 
 
     }
