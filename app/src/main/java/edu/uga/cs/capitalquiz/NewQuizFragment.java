@@ -97,7 +97,6 @@ public class NewQuizFragment extends Fragment {
             questNum = getArguments().getInt( "questionNum" );
             questList = getArguments().getStringArrayList("questList");
             fragmentScores = getArguments().getIntegerArrayList("scoreList");
-
             finishQuiz = (Quiz) getArguments().getSerializable("quiz");
 
         }
@@ -169,7 +168,7 @@ public class NewQuizFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle( getResources().getString( R.string.app_name ) );
     }
 
-    // We need to save job leads into a file as the activity stops being a foreground activity
+    // We need to save quiz into a file as the activity stops being a foreground activity
     @Override
     public void onPause() {
         Log.d( TAG, "NewQuizFragment.onPause()" );
@@ -188,6 +187,7 @@ public class NewQuizFragment extends Fragment {
         if( quizData != null )
             quizData.close();
     }
+
 
     public void checkScoreForFragment(){
 
