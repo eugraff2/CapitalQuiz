@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 
 import java.text.DateFormat;
@@ -89,6 +88,8 @@ public class FinishQuizFragment extends Fragment {
         DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
         String dateFormat = date.format(Calendar.getInstance().getTime());
         dateText.setText(dateFormat);
+        double score = finishQuiz.getResult();
+        scoreText.setText(String.valueOf(score));
         // throwing Null Object Reference error when FinishQuizFragment is added
 
 

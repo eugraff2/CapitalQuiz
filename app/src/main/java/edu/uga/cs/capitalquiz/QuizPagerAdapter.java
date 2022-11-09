@@ -33,13 +33,14 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn, ArrayList<Integer> fragmentScores, Quiz quiz){//Pager constructor receives Activity instance
         super(fa);
         this.questList = questListIn;
+        Bundle args = new Bundle();
+        args.putSerializable("quiz", quiz);
         for (int i = 0; i < 6; i++) {
             NewQuizFragment newFrag = NewQuizFragment.newInstance(i, questListIn, fragmentScores);
             myFragments[i] = newFrag;
+            myFragments[i].setArguments(args);
         } // for i
         myFragments[6] = FinishQuizFragment.newInstance(fragmentScores);
-        Bundle args = new Bundle();
-        args.putSerializable("quiz", quiz);
         myFragments[6].setArguments(args);
     }
 
@@ -52,8 +53,6 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public long getItemId(int position) {
         return super.getItemId(position);
     }
-
-
 
     @NonNull
     @Override

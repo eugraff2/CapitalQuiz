@@ -110,11 +110,6 @@ public class NewQuizSwipeFragment extends Fragment {
                     myQuiz.setDate(dateFormat);
                     Log.d( TAG, "Quiz date saved: " + myQuiz.getDate() );
 
-
-
-
-
-
                 }
             }
 
