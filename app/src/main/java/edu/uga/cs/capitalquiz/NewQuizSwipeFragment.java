@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -112,6 +113,8 @@ public class NewQuizSwipeFragment extends Fragment {
 
 
 
+
+
                 }
             }
 
@@ -119,9 +122,10 @@ public class NewQuizSwipeFragment extends Fragment {
             public void onTabUnselected(TabLayout.Tab tab) {
 
                 if(tab.getText().equals("6")) {
-                    for (int i = 0; i < fragmentScores.size(); i++) {
-                        Log.d(TAG, "NEWEST Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
-                    }
+                    Log.d(TAG, "Unselected 6 " );
+                }
+                if(tab.getText().equals(" ")) {
+                    Log.d(TAG, "Unselected BLANK " );
                 }
 
                 tab.setTabLabelVisibility(TabLayout.TAB_LABEL_VISIBILITY_UNLABELED);
@@ -136,5 +140,19 @@ public class NewQuizSwipeFragment extends Fragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        Log.d( TAG, "NewQuizSWIPEFragment.onResume()" );
+        super.onResume();
+    }
+
+    // We need to save job leads into a file as the activity stops being a foreground activity
+    @Override
+    public void onPause() {
+        Log.d( TAG, "NewQuizSWIPEFragment.onPause()" );
+        super.onPause();
+    }
+
 
 }

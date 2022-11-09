@@ -85,16 +85,9 @@ public class FinishQuizFragment extends Fragment {
         dateText = getView().findViewById(R.id.dateTime);
         scoreText = getView().findViewById(R.id.finalScore);
 
-
-
         DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
         String dateFormat = date.format(Calendar.getInstance().getTime());
         dateText.setText(dateFormat);
-
-        for(int i=0; i < fragmentScores.size(); i++){
-            Log.d( TAG, "FINISHED Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
-        }
-
         // throwing Null Object Reference error when FinishQuizFragment is added
 
 
