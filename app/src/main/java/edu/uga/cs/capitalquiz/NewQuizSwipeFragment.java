@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +32,6 @@ public class NewQuizSwipeFragment extends Fragment {
     private ViewPager2 mViewPager;
 
     private static Quiz myQuiz;
-    private List<Quiz> collectionQuiz;
 
     private QuizData quizData;
 
@@ -55,12 +55,40 @@ public class NewQuizSwipeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated( view, savedInstanceState );
-        myQuiz = new Quiz();
+
         quizData = new QuizData(getActivity());
         quizData.open();
 
+        myQuiz = new Quiz();
+
+        List<Question> questList = quizData.generateQuestions();
+        Collections.shuffle(questList);
+        ArrayList<String> questions = new ArrayList<>();
+
+        // get questions from generated list and their names
+
+        Question q1 = questList.get(0);
+        questions.add(q1.getName());
+        Question q2 = questList.get(1);
+        questions.add(q2.getName());
+        Question q3 = questList.get(2);
+        questions.add(q3.getName());
+        Question q4 = questList.get(3);
+        questions.add(q4.getName());
+        Question q5 = questList.get(4);
+        questions.add(q5.getName());
+        Question q6 = questList.get(5);
+        questions.add(q6.getName());
+
+        myQuiz.setQ1(q1.toString());
+        myQuiz.setQ2(q2.toString());
+        myQuiz.setQ3(q3.toString());
+        myQuiz.setQ4(q4.toString());
+        myQuiz.setQ5(q5.toString());
+        myQuiz.setQ6(q6.toString());
+
         mViewPager = view.findViewById(R.id.viewer);//Get ViewPager2 view
-        mViewPager.setAdapter(new QuizPagerAdapter(getActivity()));//Attach the adapter with our ViewPagerAdapter passing the host activity
+        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), questions));//Attach the adapter with our ViewPagerAdapter passing the host activity
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, mViewPager,

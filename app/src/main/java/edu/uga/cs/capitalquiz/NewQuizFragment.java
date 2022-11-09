@@ -1,5 +1,6 @@
 package edu.uga.cs.capitalquiz;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,19 +43,12 @@ public class NewQuizFragment extends Fragment {
     private boolean answered= false;
 
     private QuizData quizData;
-    private String a1;
-    private String a2;
-    private String a3;
-    private int answeredQuestions;
-    private Question q1;
-    private Question q2;
-    private Question q3;
-    private Question q4;
-    private Question q5;
-    private Question q6;
 
     // which question to display in the fragment
     private int questNum;
+
+    // list of question names to be passed in
+    private ArrayList<String> questList;
 
     public final String[] questionTitles = new String[] {//Tabs names array
             "Question 1",
@@ -78,10 +73,11 @@ public class NewQuizFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NewQuizFragment newInstance(int questNum) {
+    public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList) {
         NewQuizFragment fragment = new NewQuizFragment();
         Bundle args = new Bundle();
         args.putInt( "questionNum", questNum );
+        args.putStringArrayList("questList", questList);
         fragment.setArguments( args );
         return fragment;
     }
@@ -117,36 +113,18 @@ public class NewQuizFragment extends Fragment {
 
         quizData = new QuizData(getActivity());
         quizData.open();
-        List<Question> questList = quizData.generateQuestions();
-        Collections.shuffle(questList);
 
-        // get questions from generated list
-
-
-        Question q1 = questList.get(0);
-        Question q2 = questList.get(1);
-        Question q3 = questList.get(2);
-        Question q4 = questList.get(3);
-        Question q5 = questList.get(4);
-        Question q6 = questList.get(5);
-
-        Quiz newQuiz = new Quiz();
-        newQuiz.setQ1(q1.toString());
-        newQuiz.setQ2(q2.toString());
-        newQuiz.setQ3(q3.toString());
-        newQuiz.setQ4(q4.toString());
-        newQuiz.setQ5(q5.toString());
-        newQuiz.setQ6(q6.toString());
+        List<Question> questions = quizData.getSpecificQuestions(questList);
 
         // set question TextView variable to appropriate question
-        questionView.setText("What is the capital of " + questList.get(questNum).getName() + "?");
+        questionView.setText("What is the capital of " + questions.get(questNum).getName() + "?");
 
         // create ArrayList of answers, shuffle, then set to UI radioButtons
         ArrayList<String> answers = new ArrayList<>();
-        correctAnswer = questList.get(questNum).getCapital();
-        answers.add(questList.get(questNum).getCapital());
-        answers.add(questList.get(questNum).getAdditional1());
-        answers.add(questList.get(questNum).getAdditional2());
+        correctAnswer = questions.get(questNum).getCapital();
+        answers.add(questions.get(questNum).getCapital());
+        answers.add(questions.get(questNum).getAdditional1());
+        answers.add(questions.get(questNum).getAdditional2());
         Collections.shuffle(answers);
 
         answer1View.setText(answers.get(0));
@@ -230,10 +208,6 @@ public class NewQuizFragment extends Fragment {
         if( quizData != null )
             quizData.close();
     }
-
-
-
-
 
 
 

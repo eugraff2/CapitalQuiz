@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream is = getAssets().open("state_capitals.csv");
             CSVReader reader = new CSVReader(new InputStreamReader(is));
             String[] nextRow;
+            int count = 0;
 
             while ( (nextRow = reader.readNext() ) != null) {
                 // nextRow[] is an array of values from the line
