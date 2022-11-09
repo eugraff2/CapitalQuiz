@@ -25,7 +25,7 @@ public class ReviewQuizFragment extends Fragment {
     private List<Quiz> quizzesList;
 
     private RecyclerView recyclerView;
-    private QuizRecyclerAdapter recyclerAdapter;
+  //  private QuizRecyclerAdapter recyclerAdapter;
 
     public ReviewQuizFragment() {
         // Required constructor
@@ -108,8 +108,8 @@ public class ReviewQuizFragment extends Fragment {
             Log.d(TAG, "QuizDBReader: quizList.size(): " + quizList.size());
             quizzesList.addAll(quizList);
 
-            recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizzesList);
-            recyclerView.setAdapter(recyclerAdapter);
+        //    recyclerAdapter = new QuizRecyclerAdapter(getActivity(), quizzesList);
+          //  recyclerView.setAdapter(recyclerAdapter);
 
         }
 
@@ -138,10 +138,10 @@ public class ReviewQuizFragment extends Fragment {
             quizzesList.add(quiz);
 
             // Sync the originalValues list in the recyler adapter to the new updated list (quizList)
-            recyclerAdapter.sync();
+       //     recyclerAdapter.sync();
 
             // Notify the adapter that an item has been inserted
-            recyclerAdapter.notifyItemInserted(quizzesList.size() - 1 );
+         //   recyclerAdapter.notifyItemInserted(quizzesList.size() - 1 );
 
             // Reposition the view to show to newly added item by smoothly scrolling to it
             recyclerView.smoothScrollToPosition( quizzesList.size() - 1 );
