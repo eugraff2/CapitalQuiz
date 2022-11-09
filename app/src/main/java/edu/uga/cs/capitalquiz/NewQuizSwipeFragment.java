@@ -123,11 +123,14 @@ public class NewQuizSwipeFragment extends Fragment {
         super.onResume();
     }
 
-    // We need to save job leads into a file as the activity stops being a foreground activity
+    // We need to save quizzes into a file as the activity stops being a foreground activity
     @Override
     public void onPause() {
         Log.d( TAG, "NewQuizSWIPEFragment.onPause()" );
         super.onPause();
+
+
+
     }
 
 

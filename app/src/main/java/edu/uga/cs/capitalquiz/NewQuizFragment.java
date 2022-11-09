@@ -75,9 +75,6 @@ public class NewQuizFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setQuestList(ArrayList<String> qList) {
-        this.questList = qList;
-    }
 
     public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList, ArrayList<Integer> fragmentScores, Quiz finalQuiz) {
         NewQuizFragment fragment = new NewQuizFragment();
@@ -101,11 +98,8 @@ public class NewQuizFragment extends Fragment {
             questList = getArguments().getStringArrayList("questList");
             fragmentScores = getArguments().getIntegerArrayList("scoreList");
 
-            // TEST HERE
             finishQuiz = (Quiz) getArguments().getSerializable("quiz");
 
-            // TEST HERE
-            //Log.d(TAG, "Quiz Fragment Q1: " +  finishQuiz.toString());
         }
     }
 
@@ -164,7 +158,6 @@ public class NewQuizFragment extends Fragment {
         // find the radiobutton by returned id
         selectedAnswer = getView().findViewById(selectedId);
 
-
         answer1View = getView().findViewById(R.id.answer1);
         answer2View = getView().findViewById(R.id.answer2);
         answer3View = getView().findViewById(R.id.answer3);
@@ -181,9 +174,6 @@ public class NewQuizFragment extends Fragment {
     public void onPause() {
         Log.d( TAG, "NewQuizFragment.onPause()" );
         super.onPause();
-
-    //    thisQuiz.setNumAnswered(questNumbers[questNum]);
-      //  Log.d( TAG, "Number answered: " + questNumbers[questNum] );
 
         //if radioButton selected, save answer, record points *****
         radioGroup = getView().findViewById(R.id.radioGroup);
@@ -244,10 +234,7 @@ public class NewQuizFragment extends Fragment {
         }
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
 
-        // TEST HERE
        finishQuiz.setResult(finalScore + 1);
-       //finishQuiz.setResult(finalScore + 1);
-       //Log.d(TAG, "NEW Quiz Fragment Q1: " +  finishQuiz.toString());
 
 
     }

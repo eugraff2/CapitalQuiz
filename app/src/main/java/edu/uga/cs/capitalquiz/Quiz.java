@@ -23,7 +23,7 @@ public class Quiz implements Serializable {
         this.id = -1;
         this.date = null;
         this.result = -1.0;
-        this.numAnswered = -1;
+        this.numAnswered = 0;
         this.q1 = null;
         this.q2 = null;
         this.q3 = null;

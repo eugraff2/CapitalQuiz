@@ -33,7 +33,6 @@ public class FinishQuizFragment extends Fragment {
     private QuizData quizData;
     private static Quiz finishQuiz;
 
-    private ReviewQuizFragment reviewFragment;
     private int score;
 
     public FinishQuizFragment() {
@@ -90,10 +89,9 @@ public class FinishQuizFragment extends Fragment {
         finishQuiz.setDate(dateFormat);
         Log.d( TAG, "Quiz date saved: " + finishQuiz.getDate() );
         dateText.setText(dateFormat);
+
         double score = finishQuiz.getResult();
         scoreText.setText(String.valueOf(score));
-        // throwing Null Object Reference error when FinishQuizFragment is added
-
 
         finishButton.setOnClickListener( new SaveButtonClickListener()) ;
 
