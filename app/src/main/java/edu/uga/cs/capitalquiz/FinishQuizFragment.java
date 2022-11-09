@@ -15,28 +15,35 @@ import androidx.fragment.app.Fragment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
 public class FinishQuizFragment extends Fragment {
 
-    private static final String TAG = "HelpFragment";
+    private static final String TAG = "FinishQuizFragment";
 
     private Button finishButton;
     private TextView dateText;
     private TextView scoreText;
 
-    private QuizData quizData = null;
-    private Quiz myQuiz;
+
+    // list of fragment scores to be passed in
+    private static ArrayList<Integer> fragmentScores;
+
+    private QuizData quizData;
+    private static Quiz finishQuiz;
 
     private ReviewQuizFragment reviewFragment;
+    private int score;
 
     public FinishQuizFragment() {
         // Required empty public constructor
     }
 
-    public static FinishQuizFragment newInstance() {
+    public static FinishQuizFragment newInstance(ArrayList<Integer> finishedScores) {
         FinishQuizFragment fragment = new FinishQuizFragment();
+        fragmentScores = finishedScores;
         return fragment;
     }
 
@@ -44,6 +51,14 @@ public class FinishQuizFragment extends Fragment {
     private class SaveButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick( View v ) {
+            quizData = new QuizData( getActivity() );
+
+            // Open that database for reading of the full list of job leads.
+            // Note that onResume() hasn't been called yet, so the db open in it
+            // was not called yet!
+
+            quizData.open();
+            new QuizDBWriter().execute( finishQuiz );
 
             getActivity().onBackPressed();
         }
@@ -52,7 +67,9 @@ public class FinishQuizFragment extends Fragment {
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
+
     }
+
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
@@ -68,9 +85,17 @@ public class FinishQuizFragment extends Fragment {
         dateText = getView().findViewById(R.id.dateTime);
         scoreText = getView().findViewById(R.id.finalScore);
 
+
+
         DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
         String dateFormat = date.format(Calendar.getInstance().getTime());
         dateText.setText(dateFormat);
+
+        for(int i=0; i < fragmentScores.size(); i++){
+            Log.d( TAG, "FINISHED Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
+        }
+
+        // throwing Null Object Reference error when FinishQuizFragment is added
 
 
         finishButton.setOnClickListener( new SaveButtonClickListener()) ;

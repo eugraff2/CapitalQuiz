@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment based on the used selection in the nav drawer
         switch( menuItem.getItemId() ) {
             case R.id.menu_add:
-                Quiz newQuiz = new Quiz();
                 fragment = NewQuizSwipeFragment.newInstance();
                 break;
             case R.id.menu_review:

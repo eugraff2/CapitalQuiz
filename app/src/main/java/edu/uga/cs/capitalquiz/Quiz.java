@@ -83,7 +83,8 @@ public class Quiz implements Serializable {
         return  "Date: " + this.getDate() + "\n" +
                 "Questions Answered: " + this.getNumAnswered() + "\n" +
                 "Result: " + this.getResult() + "\n" +
-                "Question 1: " + this.getQ1() + "Question 2: " + this.getQ2() + "\n" +
+                "Question 1: " + this.getQ1() + "\n" +
+                "Question 2: " + this.getQ2() + "\n" +
                 "Question 3: " + this.getQ3() + "\n" +
                 "Question 4: " + this.getQ4() + "\n" +
                 "Question 5: " + this.getQ5() + "\n" +

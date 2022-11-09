@@ -32,6 +32,7 @@ public class NewQuizSwipeFragment extends Fragment {
     private ViewPager2 mViewPager;
 
     private static Quiz myQuiz;
+    private List<Quiz> collectionQuiz;
 
     private QuizData quizData;
 
@@ -64,6 +65,7 @@ public class NewQuizSwipeFragment extends Fragment {
         List<Question> questList = quizData.generateQuestions();
         Collections.shuffle(questList);
         ArrayList<String> questions = new ArrayList<>();
+        ArrayList<Integer> fragmentScores = new ArrayList<>();
 
         // get questions from generated list and their names
 
@@ -88,7 +90,7 @@ public class NewQuizSwipeFragment extends Fragment {
         myQuiz.setQ6(q6.toString());
 
         mViewPager = view.findViewById(R.id.viewer);//Get ViewPager2 view
-        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), questions));//Attach the adapter with our ViewPagerAdapter passing the host activity
+        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), questions, fragmentScores));//Attach the adapter with our ViewPagerAdapter passing the host activity
 
         TabLayout tabLayout = view.findViewById(R.id.tabs);
         new TabLayoutMediator(tabLayout, mViewPager,
@@ -102,20 +104,28 @@ public class NewQuizSwipeFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 if(tab.getText().equals(" ")){
-                    quizData.open();
                     DateFormat date = new SimpleDateFormat("MMM dd yyyy, h:mm");
                     String dateFormat = date.format(Calendar.getInstance().getTime());
                     myQuiz.setDate(dateFormat);
-                    // throwing Null Object Reference error when FinishQuizFragment is added
-                    quizData.storeQuiz(myQuiz);
+                    Log.d( TAG, "Quiz date saved: " + myQuiz.getDate() );
+
+
+
+
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+
+                if(tab.getText().equals("6")) {
+                    for (int i = 0; i < fragmentScores.size(); i++) {
+                        Log.d(TAG, "NEWEST Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
+                    }
+                }
+
                 tab.setTabLabelVisibility(TabLayout.TAB_LABEL_VISIBILITY_UNLABELED);
-                myQuiz.setNumAnswered(Integer.parseInt(tab.getText().toString()));
-                Log.d( TAG, "NewQuizSwipeFragment NumAnswered: " +  Integer.parseInt(tab.getText().toString()));
+
             }
 
 

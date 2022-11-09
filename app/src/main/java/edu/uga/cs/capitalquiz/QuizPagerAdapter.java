@@ -28,14 +28,14 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     };
 
 
-    public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn){//Pager constructor receives Activity instance
+    public QuizPagerAdapter(FragmentActivity fa, ArrayList<String> questListIn, ArrayList<Integer> fragmentScores){//Pager constructor receives Activity instance
         super(fa);
         this.questList = questListIn;
         for (int i = 0; i < 6; i++) {
-            NewQuizFragment newFrag = NewQuizFragment.newInstance(i, questListIn);
+            NewQuizFragment newFrag = NewQuizFragment.newInstance(i, questListIn, fragmentScores);
             myFragments[i] = newFrag;
         } // for i
-        myFragments[6] = FinishQuizFragment.newInstance();
+        myFragments[6] = FinishQuizFragment.newInstance(fragmentScores);
     }
 
     @Override

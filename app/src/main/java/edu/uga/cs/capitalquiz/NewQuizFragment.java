@@ -1,6 +1,5 @@
 package edu.uga.cs.capitalquiz;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,16 +37,16 @@ public class NewQuizFragment extends Fragment {
     private RadioButton selectedAnswer;
 
     private String correctAnswer;
-    private int addScore = 0;
-    private boolean answered= false;
+    private int scoreForFragment = -1;
 
     private QuizData quizData;
+    // list of question names to be passed in
+    private ArrayList<String> questList;
+    // list of fragment scores to be passed in
+    private ArrayList<Integer> fragmentScores;
 
     // which question to display in the fragment
     private int questNum;
-
-    // list of question names to be passed in
-    private ArrayList<String> questList;
 
     public final String[] questionTitles = new String[] {//Tabs names array
             "Question 1",
@@ -77,11 +75,12 @@ public class NewQuizFragment extends Fragment {
         this.questList = qList;
     }
 
-    public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList) {
+    public static NewQuizFragment newInstance(int questNum, ArrayList<String> questList, ArrayList<Integer> fragmentScores) {
         NewQuizFragment fragment = new NewQuizFragment();
         Bundle args = new Bundle();
         args.putInt( "questionNum", questNum );
         args.putStringArrayList("questList", questList);
+        args.putIntegerArrayList("scoreList", fragmentScores);
         fragment.setArguments( args );
         return fragment;
     }
@@ -93,6 +92,7 @@ public class NewQuizFragment extends Fragment {
         if( getArguments() != null ) {
             questNum = getArguments().getInt( "questionNum" );
             questList = getArguments().getStringArrayList("questList");
+            fragmentScores = getArguments().getIntegerArrayList("scoreList");
         }
     }
 
@@ -113,6 +113,9 @@ public class NewQuizFragment extends Fragment {
         answer1View = getView().findViewById(R.id.answer1);
         answer2View = getView().findViewById(R.id.answer2);
         answer3View = getView().findViewById(R.id.answer3);
+        radioGroup = getView().findViewById(R.id.radioGroup);
+
+
 
         questionTitle.setText(questionTitles[questNum]);
 
@@ -135,8 +138,6 @@ public class NewQuizFragment extends Fragment {
         answer1View.setText(answers.get(0));
         answer2View.setText(answers.get(1));
         answer3View.setText(answers.get(2));
-
-
     }
 
 
@@ -178,7 +179,15 @@ public class NewQuizFragment extends Fragment {
         answer2View = getView().findViewById(R.id.answer2);
         answer3View = getView().findViewById(R.id.answer3);
 
+        // method used to check score for each fragment
+        checkScoreForFragment();
 
+        // close the database in onPause
+        if( quizData != null )
+            quizData.close();
+    }
+
+    public void checkScoreForFragment(){
 
         try {
             // get selected radio button from radioGroup
@@ -186,18 +195,26 @@ public class NewQuizFragment extends Fragment {
             // find the radiobutton by returned id
             selectedAnswer = getView().findViewById(selectedId);
             Log.d( TAG, "Answer selected " + selectedAnswer.getText().toString() );
+            // freeze the buttons after question is answered
             answer1View.setClickable(false);
             answer2View.setClickable(false);
             answer3View.setClickable(false);
 
             if(correctAnswer.equals(selectedAnswer.getText().toString())){
                 Log.d( TAG, "CORRECT ");
-                addScore += 1;
-                thisQuiz.setResult(addScore);
+                scoreForFragment = 1;
+                // thisQuiz.setResult(thisQuiz.getResult() + addScore);
+                //  Log.d( TAG, "NewQuizFragment Result: " + thisQuiz.getResult() );
                 Toast.makeText( getActivity(), "CORRECT ", Toast.LENGTH_SHORT).show();
 
             } else {
+                scoreForFragment = 0;
                 Toast.makeText( getActivity(), "INCORRECT \r\nCorrect Answer: " + correctAnswer, Toast.LENGTH_SHORT).show();
+            }
+
+            fragmentScores.add(scoreForFragment);
+            for(int i=0; i < fragmentScores.size(); i++){
+                Log.d( TAG, "Fragment Score List, index: " + i + " , score:" + fragmentScores.get(i));
             }
 
         } catch (Exception e) {
@@ -206,16 +223,8 @@ public class NewQuizFragment extends Fragment {
             Log.d( TAG, "No answer selected ");
         }
 
-
-
-
-        // close the database in onPause
-        if( quizData != null )
-            quizData.close();
+        Log.d( TAG, "Score for this fragment: " + scoreForFragment);
     }
-
-
-
 
 
 } // ReviewQuizFragment
