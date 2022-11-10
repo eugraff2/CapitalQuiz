@@ -93,7 +93,7 @@ public class FinishQuizFragment extends Fragment {
         dateText.setText(dateFormat);
 
         double score = finishQuiz.getResult();
-        scorePercent = (score / 6) * 100;
+        scorePercent = Math.round((score  / 6) * 100);
         scoreText.setText(scorePercent + "%");
 
         finishButton.setOnClickListener( new SaveButtonClickListener()) ;
