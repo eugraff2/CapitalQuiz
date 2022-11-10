@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ReviewQuizFragment extends Fragment {
@@ -93,6 +94,7 @@ public class ReviewQuizFragment extends Fragment {
         @Override
         protected List<Quiz> doInBackground(Void... params) {
             List<Quiz> quizList = quizData.retrieveAllQuizzes();
+            Collections.reverse(quizList);
 
             Log.d(TAG, "QuizDBReader: Quizzes retrieved: " + quizList.size());
 
