@@ -234,7 +234,7 @@ public class NewQuizFragment extends Fragment {
         }
         Log.d(TAG, "Fragment Final Score: " +  finalScore);
 
-       finishQuiz.setResult(finalScore + 1);
+       finishQuiz.setResult(finalScore);
 
 
     }

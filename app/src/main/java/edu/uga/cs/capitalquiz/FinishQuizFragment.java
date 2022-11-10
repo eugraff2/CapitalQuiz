@@ -26,6 +26,8 @@ public class FinishQuizFragment extends Fragment {
     private TextView dateText;
     private TextView scoreText;
 
+    private double scorePercent;
+
 
     // list of fragment scores to be passed in
     private static ArrayList<Integer> fragmentScores;
@@ -91,7 +93,8 @@ public class FinishQuizFragment extends Fragment {
         dateText.setText(dateFormat);
 
         double score = finishQuiz.getResult();
-        scoreText.setText(String.valueOf(score));
+        scorePercent = (score / 6) * 100;
+        scoreText.setText(scorePercent + "%");
 
         finishButton.setOnClickListener( new SaveButtonClickListener()) ;
 
